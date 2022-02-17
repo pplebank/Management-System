@@ -19,10 +19,13 @@ public class Reservation {
     @JoinColumn(name="client_id", referencedColumnName = "id", nullable = false)
     private Client client;
 
-    private String name;
-    private String address;
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Property.class)
+    @JoinColumn(name="property_id", referencedColumnName = "id", nullable = false)
+    private Property property;
 
+    private int total_price;
+    private int days_number;
+    private Date start_date;
+    private Date end_date;
 
-    @Size(min=10, message="Enter at least 10 Characters...")
-    private String desc;
 }

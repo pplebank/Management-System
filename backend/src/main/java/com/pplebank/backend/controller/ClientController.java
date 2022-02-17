@@ -1,4 +1,4 @@
 package com.pplebank.backend.controller;
 
-public class ErrorControler {
+public class ClientController {
 }
