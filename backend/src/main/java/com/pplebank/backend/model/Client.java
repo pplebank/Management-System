@@ -10,9 +10,10 @@ public class Client {
 
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "id")
+    private Long id;
 
-    @OneToMany(mappedBy="client",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="reservation",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<Reservation> reservationList = new ArrayList<Reservation>();
 
     private String name;

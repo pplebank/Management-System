@@ -1,16 +1,27 @@
 package com.pplebank.backend.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import lombok.Data;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name="renter")
+@Data
 public class Renter {
 
-    @OneToMany(mappedBy="client",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Long id;
+
+    @OneToMany(mappedBy="property",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<Property> propertyList = new ArrayList<Property>();
 
+    @Column(name = "id")
     private String name;
+
+    @Column(name = "id")
     private String surname;
 }

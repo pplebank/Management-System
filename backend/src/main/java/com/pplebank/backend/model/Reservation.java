@@ -1,19 +1,19 @@
 package com.pplebank.backend.model;
 
-import java.util.Date;
+import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-
+import java.util.Date;
 
 @Entity
-
-
+@Table(name="reservation")
+@Data
 public class Reservation {
 
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "id")
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Client.class)
     @JoinColumn(name="client_id", referencedColumnName = "id", nullable = false)
@@ -23,9 +23,16 @@ public class Reservation {
     @JoinColumn(name="property_id", referencedColumnName = "id", nullable = false)
     private Property property;
 
-    private int total_price;
-    private int days_number;
+    @Column(name = "total_price")
+    private float total_price;
+
+    @Column(name = "number_of_days")
+    private int number_of_days;
+
+    @Column(name = "start_date")
     private Date start_date;
+
+    @Column(name = "end_date")
     private Date end_date;
 
 }
