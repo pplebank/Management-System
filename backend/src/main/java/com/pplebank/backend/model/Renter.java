@@ -16,12 +16,12 @@ public class Renter {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy="property",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="renter",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<Property> propertyList = new ArrayList<Property>();
 
-    @Column(name = "id")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "id")
+    @Column(name = "surname")
     private String surname;
 }

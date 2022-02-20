@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="product")
+@Table(name="property")
 @Data
 public class Property {
 
@@ -18,11 +18,10 @@ public class Property {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Renter.class)
     @JoinColumn(name="renter_id", referencedColumnName = "id", nullable = false)
-
-    @OneToMany(mappedBy="reservation",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
-    private List<Reservation> reservationList = new ArrayList<Reservation>();
-
     private Renter renter;
+
+    @OneToMany(mappedBy="property",fetch= FetchType.LAZY,cascade = CascadeType.PERSIST)
+    private List<Reservation> reservationList = new ArrayList<Reservation>();
 
     private float price_per_day;
     private float area;

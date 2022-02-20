@@ -1,11 +1,15 @@
 package com.pplebank.backend.model;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="client")
+@Data
 public class Client {
 
     @Id
@@ -13,7 +17,7 @@ public class Client {
     @Column(name = "id")
     private Long id;
 
-    @OneToMany(mappedBy="reservation",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="client",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
     private List<Reservation> reservationList = new ArrayList<Reservation>();
 
     private String name;
