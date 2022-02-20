@@ -1,6 +1,7 @@
 package com.pplebank.backend.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -23,9 +24,10 @@ public class Reservation {
     @JoinColumn(name="property_id", referencedColumnName = "id", nullable = false)
     private Property property;
 
-    @Column(name = "total_price")
-    private float total_price;
+    @Column(name = "total_cost")
+    private float total_cost;
 
+    @Formula("end_date - start_date")
     @Column(name = "number_of_days")
     private int number_of_days;
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Vector;
 
 @RestController
 public class ReservationController {
@@ -25,54 +26,77 @@ public class ReservationController {
 
     @ApiOperation(value = "Get all reservations", response = List.class)
     @RequestMapping(value = "/reservations", method = RequestMethod.GET)
-    public ResponseEntity<List<Reservation>> listAllReservations() {
-       List<Reservation> response = reservationService.listAllReservations();
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> listAllReservations() {
+        try{
+            List<Reservation> response = reservationService.listAllReservations();
+            return ResponseEntity.ok(response);
+        } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
-
 
     @ApiOperation(value = "Get all reservations by property", response = List.class)
     @RequestMapping(value = "/reservations/property/{property_id}", method = RequestMethod.GET)
     public ResponseEntity<?>  listReservationsByPropertyId(@Valid @PathVariable Long property_id) {
         try{
             List<Reservation> response = reservationService.getReservationsByPropertyId(property_id);
-            return ResponseEntity.ok(response);}
-        catch (Exception error){
-            return ResponseEntity.badRequest().body(error.toString());
-        }
+            return ResponseEntity.ok(response);
+        } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
 
     @ApiOperation(value = "Get all reservations by client", response = List.class)
     @RequestMapping(value = "/reservations/client/{client_id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Reservation>>  listReservationsByClientId(@Valid @PathVariable Long client_id) {
+    public ResponseEntity<?>  listReservationsByClientId(@Valid @PathVariable Long client_id) {
+        try{
         List<Reservation> response = reservationService.getReservationsByClientId(client_id);
         return ResponseEntity.ok(response);
+        } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
 
     @ApiOperation(value = "Get reservation by id", response = Reservation.class)
     @RequestMapping(value = "reservation/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Reservation> getReservationById(@Valid @PathVariable Long id) {
-        Reservation response = reservationService.getReservationById(id);
+    public ResponseEntity<?> getReservationById(@Valid @PathVariable Long id) {
+        try{
+            Reservation response = reservationService.getReservationById(id);
         return ResponseEntity.ok(response);
+        } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
 
-    @ApiOperation(value = "modify  reservation", response = List.class)
+    @ApiOperation(value = "modify reservation", response = String.class)
     @RequestMapping(value = "reservation/modify/{id}", method = RequestMethod.PUT)
-    public String modifyReservationById(@Valid @PathVariable Long id, Reservation reservation) {
-        reservationService.modifyReservationById(id, reservation);
-        return "";
+    public ResponseEntity<String> modifyReservationById(@Valid @PathVariable Long id, Reservation reservation) {
+        try{
+            Vector<String> errors = reservationService.modifyReservationById(id, reservation);
+            if (errors.isEmpty()){
+                return ResponseEntity.ok("Record successful modified");
+            }
+            return ResponseEntity.badRequest().body(errors.toString());
+        } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
 
-    @ApiOperation(value = "create new reservation", response = List.class)
+    @ApiOperation(value = "create new reservation", response = String.class)
     @RequestMapping(value = "reservation/new", method = RequestMethod.POST)
-    public Reservation createNewReservation(@Valid Reservation reservation) {
-        return reservationService.createNewReservation(reservation);
+    public ResponseEntity<?> createNewReservation(@Valid Reservation reservation) {
+        try {
+            Vector<String> errors = reservationService.createNewReservation(reservation);
+            if (errors.isEmpty()){
+                return ResponseEntity.ok("Record successful created");
+            }
+            return ResponseEntity.badRequest().body(errors.toString());
+        } catch(Exception error){
+                return ResponseEntity.badRequest().body("error message=" + error.getMessage() + ";cause message=" + error.getCause());}
     }
 
     @ApiOperation(value = "delete reservation", response = List.class)
     @RequestMapping(value = "reservation/delete/{id}", method = RequestMethod.DELETE)
-    public String deleteReservation(@Valid @PathVariable Long id) {
-        reservationService.deleteReservationById(id);
-        return "";
+    public ResponseEntity<?> deleteReservation(@Valid @PathVariable Long id) {
+        try{
+            reservationService.deleteReservationById(id);
+            return ResponseEntity.ok("Record successful deleted");
+            } catch (Exception error){
+            return ResponseEntity.badRequest().body("error message="+ error.getMessage() + ";cause message=" + error.getCause());}
     }
 }

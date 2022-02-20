@@ -1,4 +1,9 @@
 package com.pplebank.backend.repository;
 
-public class ClientRepository {
+import com.pplebank.backend.model.Reservation;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface ClientRepository extends JpaRepository<Reservation, Long> {
+
 }
