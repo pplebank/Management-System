@@ -19,8 +19,8 @@ public class ReservationController {
 
     private ReservationService reservationService;
 
-    @Autowired
-    public ReservationController(ReservationService  reservationService) {
+            @Autowired
+            public ReservationController(ReservationService  reservationService) {
         this.reservationService  = reservationService;
     }
 
@@ -55,7 +55,7 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "Get reservation by id", response = Reservation.class)
-    @RequestMapping(value = "reservation/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservation/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getReservationById(@Valid @PathVariable Long id) {
         try{
             Reservation response = reservationService.getReservationById(id);
@@ -65,7 +65,7 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "modify reservation", response = String.class)
-    @RequestMapping(value = "reservation/modify/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/reservation/modify/{id}", method = RequestMethod.PUT)
     public ResponseEntity<String> modifyReservationById(@Valid @PathVariable Long id, Reservation reservation) {
         try{
             Vector<String> errors = reservationService.modifyReservationById(id, reservation);
@@ -78,8 +78,8 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "create new reservation", response = String.class)
-    @RequestMapping(value = "reservation/new", method = RequestMethod.POST)
-    public ResponseEntity<?> createNewReservation(@Valid Reservation reservation) {
+    @RequestMapping(value = "/reservation/new", method = RequestMethod.POST)
+    public ResponseEntity<String> createNewReservation(@Valid Reservation reservation) {
         try {
             Vector<String> errors = reservationService.createNewReservation(reservation);
             if (errors.isEmpty()){
@@ -91,8 +91,8 @@ public class ReservationController {
     }
 
     @ApiOperation(value = "delete reservation", response = List.class)
-    @RequestMapping(value = "reservation/delete/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteReservation(@Valid @PathVariable Long id) {
+    @RequestMapping(value = "/reservation/delete/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteReservation(@Valid @PathVariable Long id) {
         try{
             reservationService.deleteReservationById(id);
             return ResponseEntity.ok("Record successful deleted");

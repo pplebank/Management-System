@@ -36,14 +36,12 @@ public class ReservationService {
             boolean is_begin_date_in_past = ReservationValidator.checkIfDateIsInThePast(requested_reservation);
             boolean are_dates_correct = ReservationValidator.checkIfBeginDateIsLaterThanEndDate(requested_reservation);
             boolean is_reservation_date_available = ReservationValidator.checkIfReservationDateIsAvailable(present_reservations, requested_reservation);
-            boolean is_total_cost_correct = ReservationValidator.checkIfTotalCostIsCorrect(requested_reservation);
 
             if (is_begin_date_in_past){errors_vector.add("Reservation begins in the past.");};
             if (are_dates_correct){errors_vector.add("Begin date of reservation is later than the end of the reservation.");};
             if (!is_reservation_date_available){errors_vector.add("In this date, another reservation is present.");};
-            if (!is_total_cost_correct){errors_vector.add("Incorrect total cost, please check once again.");};
 
-            if (!is_begin_date_in_past & !are_dates_correct & is_reservation_date_available & is_total_cost_correct){
+            if (!is_begin_date_in_past & !are_dates_correct & is_reservation_date_available){
                 reservationRepository.findById(id).map(reservation -> {
                     reservation.setClient(requested_reservation.getClient());
                     reservation.setProperty(requested_reservation.getProperty());
@@ -67,19 +65,17 @@ public class ReservationService {
             boolean is_begin_date_in_past = ReservationValidator.checkIfDateIsInThePast(requested_reservation);
             boolean are_dates_correct = ReservationValidator.checkIfBeginDateIsLaterThanEndDate(requested_reservation);
             boolean is_reservation_date_available = ReservationValidator.checkIfReservationDateIsAvailable(present_reservations, requested_reservation);
-            boolean is_total_cost_correct = ReservationValidator.checkIfTotalCostIsCorrect(requested_reservation);
 
             if (is_begin_date_in_past){errors_vector.add("Reservation begins in the past.");};
             if (are_dates_correct){errors_vector.add("Begin date of reservation is later than the end of the reservation.");};
             if (!is_reservation_date_available){errors_vector.add("In this date, another reservation is present.");};
-            if (!is_total_cost_correct){errors_vector.add("Incorrect total cost, please check once again.");};
 
-            if (!is_begin_date_in_past & !are_dates_correct & is_reservation_date_available & is_total_cost_correct){
+            if (!is_begin_date_in_past & !are_dates_correct & is_reservation_date_available){
                 reservationRepository.save(requested_reservation);
             }
             return errors_vector;
     }
-    public void deleteReservationById (Long id){
-         reservationRepository.deleteById(id);
+    public void deleteReservationById (Long reservation_id){
+         reservationRepository.deleteById(reservation_id);
     }
 }

@@ -1,6 +1,5 @@
 package com.pplebank.backend.validator;
 
-import com.pplebank.backend.model.Property;
 import com.pplebank.backend.model.Reservation;
 
 import java.util.Date;
@@ -38,11 +37,5 @@ public class ReservationValidator {
                return false;
        }
        return true;
-    };
-
-    static public boolean checkIfTotalCostIsCorrect(Reservation reservation){
-       Property reservation_property = reservation.getProperty();
-       float price_per_day = reservation_property.getPrice_per_day();
-       return price_per_day * reservation.getNumber_of_days() == reservation.getTotal_cost();
     };
 }
